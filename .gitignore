@@ -1,13 +1,50 @@
+# Node modules
 node_modules/
+
+# Env files (incluye backups y variaciones)
 .env
-.DS_Store
+.env.* 
+
+# Logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Build / output
 dist/
 build/
+
+# IDE / editor
 .vscode/
 .idea/
-*.swp
 *.swo
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage & test output
+coverage/
+.nyc_output/
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Misc caches
+.sass-cache/
+.cache/
+
+# Static / uploads (if any)
+uploads/
+public/uploads/
+
+# Explicitly ignore any env backups you might have
+.env.backup
+
+# Ignore local server files (if you have)
+/server.log
