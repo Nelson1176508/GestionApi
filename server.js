@@ -5,6 +5,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
+// Global error handlers to keep informative logs and avoid silent exits
+process.on('uncaughtException', (err) => {
+  console.error('uncaughtException - application will not crash (logged):', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('unhandledRejection - reason:', reason);
+});
+
 // Importar rutas
 const userRoutes = require('./src/routes/userRoutes');
 
@@ -63,7 +71,35 @@ app.use('*', (req, res) => {
 });
 
 // Iniciar servidor
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`🌟 Servidor corriendo en puerto ${PORT}`);
   console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
+});
+
+// Graceful shutdown: close server & mongoose connection on termination signals
+const gracefulShutdown = async (signal) => {
+  try {
+    console.log(`Received ${signal}. Closing HTTP server and MongoDB connection...`);
+    server.close(async (err) => {
+      if (err) {
+        console.error('Error closing server:', err);
+        process.exit(1);
+      }
+      try {
+        await mongoose.connection.close(false);
+        console.log('MongoDB connection closed. Exiting.');
+        process.exit(0);
+      } catch (closeErr) {
+        console.error('Error closing MongoDB connection:', closeErr);
+        process.exit(1);
+      }
+    });
+  } catch (e) {
+    console.error('Error during graceful shutdown:', e);
+    process.exit(1);
+  }
+};
+
+['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach((sig) => {
+  process.on(sig, () => gracefulShutdown(sig));
 });
