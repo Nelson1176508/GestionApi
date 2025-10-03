@@ -1,0 +1,12 @@
+{
+  "name": "GestionApi",
+  "version": "1.0.0",
+  "description": "API Node.js para gestión con MongoDB",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {},
+  "author": "Nelson1176508",
+  "license": "MIT"
+}
