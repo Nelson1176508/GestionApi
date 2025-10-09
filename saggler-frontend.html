@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Probar Registro de Usuario API</title>
+</head>
+<body>
+  <h2>Registro de Usuario (API)</h2>
+  <form id="registerForm">
+    <label>Nombre: <input type="text" name="nombre" required></label><br>
+    <label>Apellido: <input type="text" name="apellido" required></label><br>
+    <label>Correo: <input type="email" name="correo" required></label><br>
+    <label>Contraseña: <input type="password" name="contraseña" required></label><br>
+    <label>Teléfono: <input type="text" name="telefono" required></label><br>
+    <label>Dirección: <input type="text" name="direccion"></label><br>
+    <button type="submit">Registrar</button>
+  </form>
+  <pre id="result"></pre>
+  <script>
+    document.getElementById('registerForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target));
+      const res = await fetch('/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      document.getElementById('result').textContent = JSON.stringify(json, null, 2);
+    };
+  </script>
+</body>
+</html>
