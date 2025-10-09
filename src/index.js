@@ -10,7 +10,7 @@ const swaggerDocument = require('../swagger.json'); // Asegúrate de crear este 
 const mongoose = require('mongoose');
 const cors = require('cors'); // <-- Agrega esta línea
 
-// Configura CORS para permitir peticiones desde cualquier origen
+// Configura CORS para permitir peticiones desde cualquier origen - FORZAR DEPLOY
 app.use(cors({
   origin: true, // Permite TODOS los orígenes temporalmente
   credentials: true,
