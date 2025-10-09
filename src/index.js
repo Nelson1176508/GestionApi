@@ -13,7 +13,7 @@ const cors = require('cors'); // <-- Agrega esta línea
 // Configura CORS para permitir peticiones desde cualquier origen
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-domain.com'] // Cambia por tu dominio real
+    ? true // Permite cualquier origen en producción
     : ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
